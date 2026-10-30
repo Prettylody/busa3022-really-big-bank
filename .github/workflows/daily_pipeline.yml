@@ -1,0 +1,38 @@
+# Runs the pipeline every weekday evening, Sydney time.
+# GitHub cron uses UTC. 08:00 UTC = 7:00 pm AEDT (summer) and 6:00 pm AEST (winter),
+# both after the ASX close at 4:00 pm Sydney time.
+name: daily-pipeline
+
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"
+  workflow_dispatch: {}   # adds a "Run workflow" button for re-running a failed day
+
+permissions:
+  contents: write         # lets the job commit the new data and logs back to the repo
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Tests must pass before any data is loaded
+        run: pytest -q
+      - name: Part 1 pipeline
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python src/pipeline.py
+      - name: Part 2 metrics and dashboard table
+        run: python src/metrics.py
+      - name: Save data and logs
+        if: always()       # keep the logs even when a source failed
+        run: |
+          git config user.name "pipeline-bot"
+          git config user.email "pipeline-bot@users.noreply.github.com"
+          git add data
+          git commit -m "Daily load $(date -u +%Y-%m-%d)" || echo "Nothing new to commit"
+          git push
