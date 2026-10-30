@@ -1,3 +1,4 @@
 run_id,source,record_date,raw_values,rule_failed,action_taken
 20261030T190206,Yahoo ^AXJO,2026-06-29,8823.400390625|0,non_positive_value,rejected
 20261030T190206,Yahoo ^AXJO,2026-10-30,8908.099609375|0,non_positive_value,rejected
+20261031T014840,Yahoo ^AXJO,2026-10-30,8908.099609375|0,non_positive_value,rejected
