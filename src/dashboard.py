@@ -42,11 +42,11 @@ RED = '#C0392B'
 GRN='#2E8B57'
 
 pk= w.loc[w.close.idxmax()]
-tr = w.loc[w.close.idxmin()]
-last = w.iloc[-1]
+tr= w.loc[w.close.idxmin()]
+last =w.iloc[-1]
 
 
-# remove  chart borders
+# get rid of  chart borders
 def clean(ax):
     for s in ['top','right','left']:
         ax.spines[s].set_visible(False)
@@ -64,7 +64,7 @@ def build():
                           hspace=0.55,left=.07,right=.93,top=.93,bottom=.06)
 
     fig.text(.07,.965,
-             'Market activity is normal today, but heavy-volume days are clustering again',
+             'Market activity is normal today but heavy volume days are clustering again',
              fontsize=15,fontweight='bold',color=DK,ha='left')
 
 
@@ -94,7 +94,7 @@ def build():
     a= fig.add_subplot(gs[1])
     clean(a)
 
-    col = [RED if r=='Red' else AMB if r=='Amber' else GREY for r in w.rag]
+    col= [RED if r=='Red' else AMB if r=='Amber' else GREY for r in w.rag]
 
     a.bar(w.Date,w.volume/1e6,color=col,width=.8)
     a.plot(w.Date,w.vol_avg_20d/1e6,color=ACC,lw=2.2)
@@ -112,7 +112,7 @@ def build():
            w.vol_avg_20d.iloc[-1]/1e6,'20-day\naverage',
            color=ACC,fontsize=9.5,va='center',fontweight='bold')
 
-    # label  two big spikes
+    # label two big spikes
     for dt,lab in [(pd.Timestamp('2026-09-18'),'18 Sep: +127%'),
                    (pd.Timestamp('2026-08-31'),'31 Aug: +95%')]:
 
@@ -123,7 +123,6 @@ def build():
     a.set_xlim(w.Date.iloc[0]-pd.Timedelta(days=2),
                w.Date.iloc[-1]+pd.Timedelta(days=14))
 
-
     # ASX close prices
     b= fig.add_subplot(gs[2],sharex=a)
     clean(b)
@@ -131,7 +130,7 @@ def build():
     b.axvspan(pk.Date,tr.Date,color='#EEEEEE',zorder=0)
     b.plot(w.Date,w.close,color=DK,lw=1.8)
 
-    b.set_title('The index fell 7% from its August peak, yet volatility barely moved',
+    b.set_title('The index fell 7% from its August peak but volatility barely moved',
                loc='left',fontsize=12,fontweight='bold',color=DK,pad=8)
 
     b.set_ylabel('ASX 200 close',color=DK)
@@ -173,7 +172,7 @@ def build():
 
     # data sources
     fig.text(.07,.012,
-             'Source: Yahoo Finance (S&P/ASX 200), FRED (VIXCLS). 90 trading days, 25 Jun to 29 Oct 2026. Grey shading = 6 Aug peak to 1 Oct low.',
+             'Source: Yahoo Finance (S&P/ASX 200), FRED (VIXCLS). 90 trading days -25 Jun to 29 Oct 2026. Grey shading = 6 Aug peak to 1 Oct low.',
              fontsize=8.5,color='#777777')
 
     fig.savefig('dashboard.png',dpi=150)
