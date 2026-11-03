@@ -5,3 +5,5 @@ run_id,run_time,source,status,raw_file,rows_in,rows_passed,rows_already_loaded,r
 20261031T014840,2026-10-31T01:48:41+11:00,Yahoo ^AXJO,success,yahoo_axjo_20261031T014840.csv,12,0,11,1,True,
 20261103T044629,2026-11-03T04:46:29+11:00,FRED VIXCLS,success,fred_vixcls_20261103T044629.json,10,1,9,0,True,
 20261103T044629,2026-11-03T04:46:29+11:00,Yahoo ^AXJO,success,yahoo_axjo_20261103T044629.csv,11,1,9,1,True,
+20261104T024819,2026-11-04T02:48:19+11:00,FRED VIXCLS,success,fred_vixcls_20261104T024819.json,11,1,10,0,True,
+20261104T024819,2026-11-04T02:48:19+11:00,Yahoo ^AXJO,success,yahoo_axjo_20261104T024819.csv,12,1,10,1,True,
